@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Chart extends StatelessWidget {
-  const Chart(this.recentTransaction, {super.key});
+  Chart(this.recentTransaction, {super.key});
 
   final List<Transaction> recentTransaction;
-
-  
 
   List<Map<String, Object>> get groupedTransations {
     return List.generate(7, (index) {
@@ -19,8 +17,8 @@ class Chart extends StatelessWidget {
 
       for(var i = 0; i < recentTransaction.length; i++){
         bool sameDay = recentTransaction[i].date.day == weekDay.day;
-        bool sameMonth = recentTransaction[i].date.month == weekDay.day;
-        bool sameYear = recentTransaction[i].date.year == weekDay.day;
+        bool sameMonth = recentTransaction[i].date.month == weekDay.month;
+        bool sameYear = recentTransaction[i].date.year == weekDay.year;
 
         if(sameDay && sameMonth && sameYear){
           totalSum += recentTransaction[i].value;
@@ -38,6 +36,7 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    groupedTransations;
     return const Card(
       elevation: 6,
       margin: EdgeInsets.all(20),

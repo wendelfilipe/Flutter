@@ -31,7 +31,14 @@ class Chart extends StatelessWidget {
 
       return {
         'day':  DateFormat.E().format(weekDay)[0],
-        'value': totalSum};
+        'value': totalSum
+      };
+    });
+  }
+
+  double get _weekTotalValue{
+    return groupedTransations.fold(0.0, (sum, tr){
+      return sum + (tr['value'] as double);
     });
   }
 
@@ -41,14 +48,21 @@ class Chart extends StatelessWidget {
     return Card(
       elevation: 6,
       margin: const EdgeInsets.all(20),
-      child: Row(
-        children: groupedTransations.map((tr) {
-          return ChartBar(
-            label: tr['day'] as String,
-            value: tr['value'] as double,
-            percentage: 0,
-          );
-        }).toList(),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: groupedTransations.map((tr) {
+            return Flexible(
+              fit: FlexFit.tight,
+              child: ChartBar(
+                label: tr['day'] as String,
+                value: tr['value'] as double,
+                percentage: (tr['value'] as double) / _weekTotalValue,
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

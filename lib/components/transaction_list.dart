@@ -9,54 +9,45 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return transactions.isEmpty
-        ? const Column(
-            children: <Widget>[
-              SizedBox(height: 20),
-              Text('Nenhuma Transação Cadastrada')
-            ],
-          )
-        : Column(
-            children: transactions.map((tr) {
-              return Card(
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                        color: Theme.of(context).primaryColor,
-                        width: 2,
-                      )),
-                      padding: const EdgeInsets.all(10),
-                      child: Text(
-                        'R\$ ${tr.value.toStringAsFixed(2)}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Theme.of(context).primaryColor,
+    return Container(
+      height: 300,
+      child: transactions.isEmpty
+          ? const Column(
+              children: <Widget>[
+                SizedBox(height: 20),
+                Text('Nenhuma Transação Cadastrada')
+              ],
+            )
+          : ListView.builder(
+              itemCount: transactions.length,
+              itemBuilder: (ctx, index){
+                final tr = transactions[index];
+                  return Card(
+                    elevation: 5,
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 8,
+                      horizontal: 5,
+                    ),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        radius: 30,
+                        child: Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: FittedBox(
+                            child: Text('R\$${tr.value}'),
+                          ),
                         ),
                       ),
+                      title: Text(
+                        tr.title,
+                      ),
+                      subtitle: Text(
+                        DateFormat('d MMM y').format(tr.date),
+                      ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          tr.title,
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          DateFormat('d MMM y').format(tr.date),
-                          style: const TextStyle(color: Colors.grey),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              );
-            }).toList(),
-          );
+                  );
+              },
+          ),
+    );
   }
 }

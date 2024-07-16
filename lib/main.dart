@@ -17,17 +17,21 @@ class ExpensesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: MyHomePage(),
-      theme: tema.copyWith(
+     theme: tema.copyWith(
         colorScheme: tema.colorScheme.copyWith(
           primary: Colors.purple,
           secondary: Colors.amber,
         ),
         textTheme: tema.textTheme.copyWith(
-          titleLarge: const TextStyle(
+          headline6: const TextStyle(
             fontFamily: 'OpenSans',
             fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
+          ),
+          button: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
         ),
         appBarTheme: const AppBarTheme(

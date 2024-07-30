@@ -6,6 +6,7 @@ import 'package:expenses_curso/components/transaction_form.dart';
 import 'package:expenses_curso/components/transaction_list.dart';
 import 'package:expenses_curso/models/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 main() => runApp(ExpensesApp());
 

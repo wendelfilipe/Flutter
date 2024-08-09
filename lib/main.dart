@@ -18,7 +18,7 @@ class ExpensesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: MyHomePage(),
-     theme: tema.copyWith(
+      theme: tema.copyWith(
         colorScheme: tema.colorScheme.copyWith(
           primary: Colors.purple,
           secondary: Colors.amber,
@@ -59,8 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tr) {
-      return tr.date.isAfter(DateTime.now().subtract(
-        const Duration(days: 7)),
+      return tr.date.isAfter(
+        DateTime.now().subtract(const Duration(days: 7)),
       );
     }).toList();
   }
@@ -70,8 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
         id: Random().nextDouble().toString(),
         title: title,
         value: value,
-        date: date
-    );
+        date: date);
 
     setState(() {
       _transactions.add(newTransaction);
@@ -91,36 +90,44 @@ class _MyHomePageState extends State<MyHomePage> {
         context: context,
         builder: (_) {
           return TransactionForm(_addTransaction);
-      }
-    );
+        });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Despesas Pessoais'),
-        actions: <Widget>[
-          IconButton(
-            onPressed: () => _openTransactionFormModal(context), 
+    final appBar = AppBar(
+      title: const Text('Despesas Pessoais'),
+      actions: <Widget>[
+        IconButton(
+            onPressed: () => _openTransactionFormModal(context),
             icon: const Icon(Icons.add))
-        ],
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
+      ],
+      backgroundColor: Theme.of(context).primaryColor,
+    );
+
+    final availableHeight = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Chart(_recentTransactions),
-            TransactionList(_transactions, _removeTransation),
+            Container(
+                height: availableHeight * 0.3,
+                child: Chart(_recentTransactions)),
+            Container(
+                height: availableHeight * 0.7,
+                child: TransactionList(_transactions, _removeTransation)),
           ],
         ),
       ),
-      floatingActionButton:
-          FloatingActionButton(
-            onPressed: () => _openTransactionFormModal(context), 
-            child: const Icon(Icons.add)),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () => _openTransactionFormModal(context),
+          child: const Icon(Icons.add)),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }

@@ -6,6 +6,7 @@ import 'package:expenses_curso/components/transaction_form.dart';
 import 'package:expenses_curso/components/transaction_list.dart';
 import 'package:expenses_curso/models/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 main() => runApp(ExpensesApp());
@@ -16,6 +17,9 @@ class ExpensesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp
+    // ]);
     return MaterialApp(
       home: MyHomePage(),
       theme: tema.copyWith(
